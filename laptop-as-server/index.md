@@ -37,22 +37,28 @@ I eventually arrived at the following solution:
 ```shell
 # Disable hibernate
 systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target
+```
+
+```shell
 # Install power and display management (vbetool since we're don't have X installed)
 apt install -y acpid vbetool
-# Configure ACPId lid action
+```
+
+```shell
+# Configure ACPI lid action
 mkdir -p /etc/acpi/actions/
 cat <<EOF >/etc/acpi/actions/lid.sh
 grep -q closed /proc/acpi/button/lid/LID/state && (vbetool dpms off)
 grep -q open /proc/acpi/button/lid/LID/state && (vbetool dpms on)
 EOF
 chmod a+x /etc/acpi/actions/lid.sh
-# Configure ACPId lid event to trigger action
+# Configure ACPI lid event to trigger action
 cat <<EOF >/etc/acpi/events/lid
 event=button/lid
 action=/etc/acpi/actions/lid.sh %e
 EOF
-# Restart ACPId
-service acpid restart
+# Configure ACPId to autostart and (re)start it
+systemctl enable acpid && service acpid restart
 ```
 
 That's it - now we don't have to worry about burning in the LCD display and the server is a little more energy efficient.
