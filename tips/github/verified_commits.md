@@ -21,9 +21,9 @@ when **Vigilant Mode** is turned on.
    LAST_GOOD_COMMIT=
    ```
 
-   > [!TIP]
-   >
-   > If there was no good commit, set `LAST_GOOD_COMMIT='--root'`
+> [!TIP]
+>
+> If there was no good commit, set `LAST_GOOD_COMMIT='--root'`
 
 3. Run the following rebase command:
 
@@ -43,6 +43,6 @@ when **Vigilant Mode** is turned on.
    git push --force-with-lease
    ```
 
-   > [!WARNING]
-   >
-   > Skip if prompted to pull or fetch.
+> [!WARNING]
+>
+> Skip if prompted to pull or fetch.
